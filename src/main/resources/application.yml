@@ -1,0 +1,37 @@
+# 配置端口
+server:
+  port: 8764
+org:
+  quartz:
+    jobStore:
+      #设置计划程序的JobStore类（必需）
+      class: net.joelinn.quartz.jobstore.RedisJobStore
+      #设置Redis主机（必需）、您的redis主机或一个逗号分隔的主机列表：port（如果需要集群使用）
+      host: 192.168.0.94
+      #以毫秒为单位设置调度程序的触发器缺火阈值（可选，默认值为60000）
+      misfireThreshold: 60000
+      #设置redis密码（可选，默认为空）
+      password: sa
+      #设置redis端口（可选，默认为6379）
+      port: 6379
+      #启用Redis集群（可选，默认为false）
+      redisCluster: false
+      #启用Redis sentinel（可选，默认为false）
+      redisSentinel: false
+      #设置sentinel主组名称（如果redisSentinel=true，则为必需）
+      masterGroupName: quartz_redis_
+      #设置redis数据库（可选，默认为0）
+      database: 1
+      #为所有JobStore Redis key设置Redis key前缀（可选，默认为none）
+      keyPrefix: a_prefix_quartz_key_
+      #以毫秒为单位设置Redis锁超时（可选，默认为30000）
+      lockTimeout: 30000
+      ssl: false
+
+# Redis数据库索引（默认为0）
+#spring:
+#  redis:
+#    database: 1
+#    host: 127.0.0.1  # Redis服务器地址
+#    port: 6379 # Redis服务器连接端口
+#    password: sa # Redis服务器连接密码（默认为空）
