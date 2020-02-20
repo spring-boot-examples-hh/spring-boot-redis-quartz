@@ -1,17 +1,38 @@
 # 配置端口
 server:
   port: 8764
+  servlet:
+    context-path: /quartz
+# 静态文件请求匹配方式
+spring:
+  mvc:
+    static-path-pattern: /**
+  #spring.thymeleaf.mode=LEGACYHTML5
+  #spring boot 2.x  参数变化
+  thymeleaf:
+#    suffix: .html
+    #前缀，在构建URL时，该前缀被预先设置为视图名称
+    prefix: classpath:/templates/
+    cache: false
+    cache-period: 0
+    template:
+      cache: false
+  devtools:
+    livereload:
+      enabled: true
 org:
   quartz:
     jobStore:
       #设置计划程序的JobStore类（必需）
       class: net.joelinn.quartz.jobstore.RedisJobStore
       #设置Redis主机（必需）、您的redis主机或一个逗号分隔的主机列表：port（如果需要集群使用）
-      host: 192.168.0.94
+#      host: 192.168.0.94
+      host: localhost
       #以毫秒为单位设置调度程序的触发器缺火阈值（可选，默认值为60000）
       misfireThreshold: 60000
       #设置redis密码（可选，默认为空）
       password: sa
+#      password: 1q2w3e4r
       #设置redis端口（可选，默认为6379）
       port: 6379
       #启用Redis集群（可选，默认为false）
@@ -35,3 +56,6 @@ org:
 #    host: 127.0.0.1  # Redis服务器地址
 #    port: 6379 # Redis服务器连接端口
 #    password: sa # Redis服务器连接密码（默认为空）
+logging:
+  level:
+    com.faster: debug

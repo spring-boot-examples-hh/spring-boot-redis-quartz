@@ -1,21 +1,24 @@
 package com.roylao.service;
 
-import com.roylao.entity.TaskInfo;
+import com.roylao.common.config.Result;
+import com.roylao.entity.QuartzEntity;
 import org.quartz.SchedulerException;
+
+import java.util.List;
 
 public interface TaskInfoService {
 
-    public String list();
+    public List<QuartzEntity> list();
 
-    public String addJob(TaskInfo info);
+    public Result addJob(QuartzEntity info);
 
-    public String edit(TaskInfo info);
+    public Result edit(QuartzEntity info);
 
-    public String delete(String jobName, String jobGroup);
+    public Result delete(String jobName, String jobGroup);
 
-    public String pause(String jobName, String jobGroup);
+    public Result pause(String jobName, String jobGroup);
 
-    public String resume(String jobName, String jobGroup);
+    public Result resume(String jobName, String jobGroup);
 
     public boolean checkExists(String jobName, String jobGroup) throws SchedulerException;
 }

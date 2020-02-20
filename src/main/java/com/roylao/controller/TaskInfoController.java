@@ -1,16 +1,17 @@
 package com.roylao.controller;
 
-import com.roylao.entity.TaskInfo;
+import com.roylao.common.config.Result;
+import com.roylao.entity.QuartzEntity;
 import com.roylao.service.TaskInfoService;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
-@RequestMapping(value = "quartz")
+@RequestMapping(value = "job")
 public class TaskInfoController {
 
     @Autowired
@@ -19,9 +20,9 @@ public class TaskInfoController {
     /**
      * 所有任务列表
      */
-    @RequestMapping(value = "find")
-    public String list() {
-        return  taskInfoService.list();
+    @RequestMapping(value = "list")
+    public Result list() {
+        return Result.ok(taskInfoService.list());
     }
 
     /**
@@ -31,7 +32,7 @@ public class TaskInfoController {
      */
     @RequestMapping(value = "add",method = RequestMethod.POST)
     @SuppressWarnings("unchecked")
-    public String addJob(TaskInfo info) {
+    public Result addJob(QuartzEntity info) {
         return taskInfoService.addJob(info);
     }
 
@@ -41,7 +42,7 @@ public class TaskInfoController {
      * @param info
      */
     @RequestMapping(value = "update")
-    public String edit(TaskInfo info) {
+    public Result edit(QuartzEntity info) {
         return taskInfoService.edit(info);
     }
 
@@ -52,8 +53,13 @@ public class TaskInfoController {
      * @param jobGroup 组名称
      */
     @RequestMapping(value = "delete")
-    public String delete(String jobName, String jobGroup) {
+    public Result delete(String jobName, String jobGroup) {
         return taskInfoService.delete(jobName,jobGroup);
+    }
+
+    @PostMapping("/trigger")
+    public Result trigger(String jobName, String jobGroup) {
+        return taskInfoService.resume(jobName,jobGroup);
     }
 
     /**
@@ -62,7 +68,7 @@ public class TaskInfoController {
      * @param jobName
      */
     @RequestMapping(value = "pause")
-    public String pause(String jobName, String jobGroup) {
+    public Result pause(String jobName, String jobGroup) {
         return taskInfoService.pause(jobName,jobGroup);
     }
 
@@ -72,7 +78,7 @@ public class TaskInfoController {
      * @param jobName
      */
     @RequestMapping(value = "resume")
-    public String resume(String jobName, String jobGroup) {
+    public Result resume(String jobName, String jobGroup) {
         return taskInfoService.resume(jobName,jobGroup);
     }
 
