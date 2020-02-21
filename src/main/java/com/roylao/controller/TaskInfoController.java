@@ -26,7 +26,7 @@ public class TaskInfoController {
    /* @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", dataType = "Long", name = "id", value = "信息id", required = true)
     })*/
-    @GetMapping(value = "list")
+    @RequestMapping(value = "list",method = RequestMethod.POST)
     public Result list() {
         return Result.ok(taskInfoService.list());
     }
