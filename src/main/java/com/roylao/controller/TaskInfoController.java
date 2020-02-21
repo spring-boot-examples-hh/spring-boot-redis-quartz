@@ -3,13 +3,14 @@ package com.roylao.controller;
 import com.roylao.common.config.Result;
 import com.roylao.entity.QuartzEntity;
 import com.roylao.service.TaskInfoService;
+import io.swagger.annotations.*;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
-
+@Api(value = "任务", description = "任务操作API", position = 100, protocols = "http")
 @RestController
 @RequestMapping(value = "job")
 public class TaskInfoController {
@@ -17,10 +18,15 @@ public class TaskInfoController {
     @Autowired
     private TaskInfoService taskInfoService;
 
-    /**
-     * 所有任务列表
-     */
-    @RequestMapping(value = "list")
+    @ApiOperation("所有任务列表")
+    @ApiResponses({
+            @ApiResponse(code = -1, message = "查询失败"),
+            @ApiResponse(code = 500, message = "服务器内部异常"),
+            @ApiResponse(code = 0, message = "查询成功") })
+   /* @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "Long", name = "id", value = "信息id", required = true)
+    })*/
+    @GetMapping(value = "list")
     public Result list() {
         return Result.ok(taskInfoService.list());
     }
@@ -41,7 +47,7 @@ public class TaskInfoController {
      *
      * @param info
      */
-    @RequestMapping(value = "update")
+    @RequestMapping(value = "update",method = RequestMethod.POST)
     public Result edit(QuartzEntity info) {
         return taskInfoService.edit(info);
     }
@@ -52,7 +58,7 @@ public class TaskInfoController {
      * @param jobName com.roylao.common.job.ScheduledJobOne
      * @param jobGroup 组名称
      */
-    @RequestMapping(value = "delete")
+    @RequestMapping(value = "delete",method = RequestMethod.POST)
     public Result delete(String jobName, String jobGroup) {
         return taskInfoService.delete(jobName,jobGroup);
     }
@@ -67,7 +73,7 @@ public class TaskInfoController {
      *
      * @param jobName
      */
-    @RequestMapping(value = "pause")
+    @RequestMapping(value = "pause",method = RequestMethod.POST)
     public Result pause(String jobName, String jobGroup) {
         return taskInfoService.pause(jobName,jobGroup);
     }
@@ -77,7 +83,7 @@ public class TaskInfoController {
      *
      * @param jobName
      */
-    @RequestMapping(value = "resume")
+    @RequestMapping(value = "resume",method = RequestMethod.POST)
     public Result resume(String jobName, String jobGroup) {
         return taskInfoService.resume(jobName,jobGroup);
     }
@@ -89,7 +95,7 @@ public class TaskInfoController {
      * @param jobGroup
      * @throws SchedulerException
      */
-    @RequestMapping(value = "checkExists")
+    @RequestMapping(value = "checkExists",method = RequestMethod.POST)
     public boolean checkExists(String jobName, String jobGroup) throws SchedulerException {
         return taskInfoService.checkExists(jobName,jobGroup);
     }

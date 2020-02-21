@@ -8,7 +8,7 @@
     <version>1.0</version>
     <packaging>war</packaging>
 
-    <name>spring-boot-hello</name>
+    <name>spring-boot-redis-quartz</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
@@ -59,6 +59,20 @@
             <groupId>net.sourceforge.nekohtml</groupId>
             <artifactId>nekohtml</artifactId>
         </dependency>
+
+        <!--swagger2ui start-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <!--swagger2ui end-->
+
         <!--end -->
 
         <!--springboot 打war包去掉tomcat-->

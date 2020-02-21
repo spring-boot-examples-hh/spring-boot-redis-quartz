@@ -58,4 +58,4 @@ org:
 #    password: sa # Redis服务器连接密码（默认为空）
 logging:
   level:
-    com.faster: debug
+    com.roylao: DEBUG
