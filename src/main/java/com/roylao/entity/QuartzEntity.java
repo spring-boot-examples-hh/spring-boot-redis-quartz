@@ -21,13 +21,17 @@ public class QuartzEntity implements Serializable {
     /**任务状态*/
     private String jobStatus;
 
-    /**任务状态*/
+    /**任务状态名称*/
     private String jobStatusName;
 
     /**任务表达式*/
     private String cronExpression;
 
     private String createTime;
+
+    private String oldJobName;
+
+    private String oldJobGroup;
 
     public int getId() {
         return id;
@@ -117,7 +121,23 @@ public class QuartzEntity implements Serializable {
         return jobStatusName;
     }
 
-   /* public void setJobStatusName(String jobStatusName) {
+    public String getOldJobName() {
+        return oldJobName;
+    }
+
+    public void setOldJobName(String oldJobName) {
+        this.oldJobName = oldJobName;
+    }
+
+    public String getOldJobGroup() {
+        return oldJobGroup;
+    }
+
+    public void setOldJobGroup(String oldJobGroup) {
+        this.oldJobGroup = oldJobGroup;
+    }
+
+    /* public void setJobStatusName(String jobStatusName) {
         this.jobStatusName = jobStatusName;
     }*/
     /*@Override

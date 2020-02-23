@@ -111,26 +111,34 @@ public class TaskInfoServiceImpl implements TaskInfoService {
     public Result edit(QuartzEntity info) {
         String jobName = info.getJobName(),
                 jobGroup = info.getJobGroup(),
+                jobClassName = info.getJobClassName(),
                 cronExpression = info.getCronExpression(),
                 jobDescription = info.getJobDescription(),
                 createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            if (!checkExists(jobName, jobGroup)) {
+            /*if (!checkExists(jobName, jobGroup)) {
                 logger.info("edit job fail, job is not exist, jobGroup:{}, jobName:{}", jobGroup, jobName);
                 return Result.error(-1,"job is not exist");
-            }
+            }*/
             TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroup);
             JobKey jobKey = new JobKey(jobName, jobGroup);
             CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression).withMisfireHandlingInstructionDoNothing();
             CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(triggerKey).withDescription(createTime).withSchedule(cronScheduleBuilder).build();
 
-            JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-            jobDetail.getJobBuilder().withDescription(jobDescription);
+            /*JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+            jobDetail.getJobBuilder().withIdentity(jobKey).withDescription(jobDescription).build();*/
+            Class<? extends Job> clazz = (Class<? extends Job>) Class.forName(jobClassName);
+            JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(jobKey).withDescription(jobDescription).build();
+
+            if (!checkExists(jobName, jobGroup)) {
+                logger.info("edit job fail, job is not exist, jobGroup:{}, jobName:{}", jobGroup, jobName);
+                return Result.error(-1,"job is not exist");
+            }
             HashSet<Trigger> triggerSet = new HashSet<>();
             triggerSet.add(cronTrigger);
-
+            scheduler.unscheduleJob(triggerKey);
             scheduler.scheduleJob(jobDetail, triggerSet, true);
-        } catch (SchedulerException e) {
+        } catch (Exception e) {
             logger.error("类名不存在或执行表达式错误,exception:{}", e.getMessage());
             return Result.error(-1,"类名不存在或执行表达式错误");
         }
