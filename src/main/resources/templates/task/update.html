@@ -44,6 +44,7 @@
     </template>
 </div>
 <script type="text/javascript">
+    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
     var vm = new Vue({
         el: '#app',
         data: {
@@ -80,7 +81,7 @@
             acceptClick: function () {
                 //Validate不起作用MD
                 var quartz = vm.formQuartz;
-                console.log("params:"+JSON.stringify(quartz));
+                // console.log("params:"+JSON.stringify(quartz));
                 if (vm.formQuartz.jobName == "" || vm.formQuartz.jobGroup == "" || vm.formQuartz.jobDescription == ""
                     || vm.formQuartz.jobClassName == "" || vm.formQuartz.cronExpression == "") {
                     alert("请输入以上完整信息");
@@ -92,9 +93,10 @@
                     data: quartz,
                     success: function (result) {
                         if (result.code == "0") {
-                            window.parent.location.reload();
-                            // window.parent.vm.list();
-                            // window.parent.ttt();
+                            // alert(window.parent.frames[0].name)
+                            window.parent.frames[0].reloadlist();
+                            // window.parent.location.reload();
+                            parent.layer.close(index);
                         } else {
                             vm.$Notice.error({
                                 desc: result.msg

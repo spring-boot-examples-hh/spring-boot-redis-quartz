@@ -164,6 +164,9 @@
 
         },
         methods: {
+            fatherMethod:function() {
+                console.log('测试');
+            },
             //搜索
             search: function () {
                 $.ajax({
@@ -295,6 +298,9 @@
         }
     })
 
+    function reloadlist() {
+        vm.list();
+    }
 </script>
 </body>
 </html>

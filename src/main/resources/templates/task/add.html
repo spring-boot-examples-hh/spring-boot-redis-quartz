@@ -46,6 +46,7 @@
     </template>
 </div>
 <script type="text/javascript">
+    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
     var vm = new Vue({
         el: '#app',
         data: {
@@ -93,7 +94,9 @@
                     data: quartz,
                     success: function (result) {
                         if (result.code == "0") {
-                            window.parent.location.reload();
+                            // window.parent.location.reload();
+                            window.parent.frames[0].reloadlist();
+                            parent.layer.close(index);
                         } else {
                             vm.$Notice.error({
                                 desc: '系统异常'
@@ -108,6 +111,9 @@
         }
     })
 
+    function reloadlist() {
+        vm.list();
+    }
 </script>
 </body>
 </html>
