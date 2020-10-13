@@ -26,7 +26,7 @@ org:
       class: net.joelinn.quartz.jobstore.RedisJobStore #设置计划程序的JobStore类（必需）
       host: 118.24.230.99:7000,118.24.230.99:7001,118.24.230.99:7002,118.24.230.99:7003,118.24.230.99:7004,118.24.230.99:7005 #设置Redis主机（必需）、您的redis主机或一个逗号分隔的主机列表：port（如果需要集群使用）
       misfireThreshold: 60000 #以毫秒为单位设置调度程序的触发器缺火阈值（可选，默认值为60000）
-      password: 0okm9ijn~  #设置redis密码（可选，默认为空）
+      password:  #设置redis密码（可选，默认为空）
       port: 7002   #设置redis端口（可选，默认为6379）
       redisCluster: true  #启用Redis集群（可选，默认为false）
       redisSentinel: true #启用Redis sentinel（可选，默认为false）
